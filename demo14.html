@@ -14,20 +14,21 @@
 	<script type="text/babel">
 		var LoginHtml = React.createClass({
 			getInitialState:function(){
-				return{username:"",
-						pass:""}
+				return{username:"",pass:""}
 			},
-			componentDidUpdate:function(){
-				this.setState({username:ReactDOM.findDOMNode(this.refs.user).value,
-					pass:ReactDOM.findDOMNode(this.refs.pass).value})
+			textOnChange:function(e){
+				this.setState({username:ReactDOM.findDOMNode(this.refs.user).value})
+			},
+			pwdonChang:function(e){
+				this.setState({pass:ReactDOM.findDOMNode(this.refs.pass).value})
 			},
 			render:function(){
 				var username = this.state.username;
 				var pass= this.state.pass;
 				return (<div>
-					<UserName ref="user"/>
+					<UserName ref="user" onChangeMethod={this.textOnChange}/>
 					<br/>
-					<Pass ref="pass"/>
+					<Pass ref="pass" onChangeMethod={this.pwdonChang}/>
 					<br/>
 					<div>
 					<SubmitButton username ={username} pass={pass}/>
@@ -39,7 +40,6 @@
 		var SubmitButton =React.createClass({
 			handleClick:function(){
 				if (this.props.username==""){
-					alert(this.props.username)
 					alert("用户名不能为空！")
 				}
 				else if(this.props.pass==''){
@@ -54,12 +54,12 @@
 		});
 		var UserName = React.createClass({
 			render(){
-				return (<input type="text" placeholder="登录用户名" />)
+				return (<input type="text" placeholder="登录用户名"  onChange={this.props.onChangeMethod}/>)
 			}
 		});
 		var Pass = React.createClass({
 			render(){
-				return (<input type="password"  placeholder="密码" />)
+				return (<input type="password"  placeholder="密码" onChange={this.props.onChangeMethod}/>)
 			}
 		});
 
