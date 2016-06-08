@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>React Tutorial</title>
+		<script src="build/react.js" ></script>
+		<script src="build/browser.min.js" ></script>
+		<script src="build/react-dom.js" ></script>
+		<script src="build/marked.min.js"></script>
+	</head>
+	<body>
+		<div id='content'></div>
+	</body>
+	<script type="text/babel">
+		var LoginHtml = React.createClass({
+			getInitialState:function(){
+				return{username:"",
+						pass:""}
+			},
+			componentDidUpdate:function(){
+				this.setState({username:ReactDOM.findDOMNode(this.refs.user).value,
+					pass:ReactDOM.findDOMNode(this.refs.pass).value})
+			},
+			render:function(){
+				var username = this.state.username;
+				var pass= this.state.pass;
+				return (<div>
+					<UserName ref="user"/>
+					<br/>
+					<Pass ref="pass"/>
+					<br/>
+					<div>
+					<SubmitButton username ={username} pass={pass}/>
+					<input type="button"  value="取消"/>
+				</div>
+				</div>)
+			}
+			});	
+		var SubmitButton =React.createClass({
+			handleClick:function(){
+				if (this.props.username==""){
+					alert(this.props.username)
+					alert("用户名不能为空！")
+				}
+				else if(this.props.pass==''){
+					alert("密码不能为空！")	
+				}
+			},
+			render:function(){
+				return(
+					<input type="submit" name="login" value="登录" onClick={this.handleClick}/>
+					)
+			},
+		});
+		var UserName = React.createClass({
+			render(){
+				return (<input type="text" placeholder="登录用户名" />)
+			}
+		});
+		var Pass = React.createClass({
+			render(){
+				return (<input type="password"  placeholder="密码" />)
+			}
+		});
+
+		ReactDOM.render(
+				<LoginHtml/>,
+				document.getElementById('content')
+			);
+	</script>
