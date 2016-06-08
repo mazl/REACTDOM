@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>React Tutorial</title>
+		<script src="build/react.js" ></script>
+		<script src="build/browser.min.js" ></script>
+		<script src="build/react-dom.js" ></script>
+		<script src="build/marked.min.js"></script>
+	</head>
+	<body>
+		<div id='content'></div>
+	</body>
+	<script type="text/babel">
+		var LoginHtml = React.createClass({
+			handleClick:function()
+			{
+				
+				if (ReactDOM.findDOMNode(this.refs.user).value==""){
+					alert("用户名不能为空！")
+				}
+				if(ReactDOM.findDOMNode(this.refs.pass).value==""){
+					alert("密码不能为空！")
+				}
+			},
+			render:function(){
+
+				return (<div>
+					<UserName ref="user"/>
+					<br/>
+					<Pass ref="pass"/>
+					<br/>
+					<div>
+					<input type="submit"  value="登录" onClick={this.handleClick}/>
+					<input type="button"  value="取消"/>
+				</div>
+				</div>)
+			}
+
+			});	
+		var UserName = React.createClass({
+			getInitialState:function(){
+				return {name:''}
+			},
+			handleChange:function(event){
+				this.setState({name:event.target.value});
+			},
+			render:function(){
+				var name = this.state.name
+				return (<input type="text"  value={name} placeholder="登录用户名" onChange={this.handleChange}/>)
+			}
+
+
+		});
+		var Pass = React.createClass({
+			getInitialState:function(){
+				return {pass:''}
+			},
+			handleChange:function(event){
+				this.setState({pass:event.target.value});
+			},
+			render:function(){
+				var pass = this.state.pass
+				return (<input type="text"  value={pass} placeholder="密码" onChange={this.handleChange}/>)
+			}
+
+		}) 
+
+		ReactDOM.render(
+				<LoginHtml/>,
+				document.getElementById('content')
+			);
+	</script>

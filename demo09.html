@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>React Tutorial</title>
+		<script src="build/react.js" ></script>
+		<script src="build/browser.min.js" ></script>
+		<script src="build/react-dom.js" ></script>
+		<script src="build/marked.min.js"></script>
+	</head>
+	<body>
+		<div id='content'></div>
+	</body>
+	<script type="text/babel">
+		var Comment=React.createClass({
+			getInitialState:function(){
+				return {value:"hello!"};
+			},
+			handleChange:function(){
+				this.setState({value:"hello! nihao"});
+			},
+			render:function(){
+				var value=this.state.value;
+				return(
+					<div>
+						<input type="text"  value={value} onClick={this.handleChange} />
+						<p>{value}</p>
+					</div>
+					);
+			}
+		});
+
+		ReactDOM.render(
+			<Comment/>,
+			document.getElementById('content')
+			);
+	</script>
+	</html>
